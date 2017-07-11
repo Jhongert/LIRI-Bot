@@ -41,7 +41,34 @@ switch(command){
 
 //my tweets function
 function myTweets(){
+	//Load the node twitter module
+	var twitter = require('twitter');
+	var keys = require('./keys.js');
+	var twitterKeys = keys.twitterKeys;
 
+	var client = new twitter(twitterKeys);
+	var params = {count: 20};
+
+	client.get('statuses/user_timeline', params, function(error, tweets, response) {
+  		if (!error) {
+  			var tweetsInfo = '************************ My tweets ************************ \n';
+    		
+    		for(var i = 0; i < tweets.length; i++){
+    			tweetsInfo += 'Created on: ' + tweets[i].created_at + '\n';
+    			tweetsInfo += 'Content: ' + tweets[i].text + '\n';
+    		}
+    		tweetsInfo += '************************ end my tweets ************************ \n';
+    		
+    		//console log tweets
+    		console.log(tweetsInfo);
+
+    		//Append tweets to log.txt file
+			fs.appendFile('log.txt', songInfo, function(err){
+				if (err) return console.log(err);
+			});
+
+  		} else {console.log(error)}
+	});
 }
 
 //spotify this song function
@@ -108,7 +135,7 @@ function movieThis(movieName){
 		if(!error && response.statusCode === 200){
 			//parse the body into movieData variable
 			var movieData = JSON.parse(body);
-			
+
 			if(movieData.Error){
 				return console.log(movieData.Error);
 			}
