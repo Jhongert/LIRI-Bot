@@ -1,33 +1,53 @@
+//Load fs Modules
+var fs = require('fs');
 
-
+// Get the command(my-tweets, movie-this, etc) from process.argv
+// The command will be the 3rd argumet
 var command = process.argv[2];
+var parameter;
 
+//if there are more than 3 arguments in process.argv
+//then those arguments are the movie's name or song's name
+if(process.argv.length > 3){
+	//get all arguments from process.argv starting on position 3 in a new array
+	var arr = process.argv.slice(3);
+
+	//create a string separated by plus(+) sign with the arguments in arr array
+	//this strin is the movie's name or song's name
+	parameter = arr.join('+');
+}
+
+//check the command typed and call the corresponding function
 switch(command){
 	case 'my-tweets':
 		myTweets();
 		break;
 	case 'spotify-this-song':
-		spotifyThisSong();
+		if(parameter)
+			spotifyThisSong(parameter);
+		else 
+			spotifyThisSong('The Sign');
 		break;
 	case 'movie-this':
-		movieThis();
+		if(parameter)
+			movieThis(parameter)
+		else 
+			movieThis('Mr. Nobody');
 		break;
 	case 'do-what-it-says':
 		doWhatItSays();
 		break;
 }
 
+//my tweets function
 function myTweets(){
 
 }
 
-function spotifyThisSong(song = 'The Sign'){
-	var Spotify = require('node-spotify-api');
-
-	if(process.argv.length > 3){
-		var arr = process.argv.slice(3);
-		song = arr.join('+');
-	}
+//spotify this song function
+function spotifyThisSong(song){
+	//Load the node spotify module
+	var Spotify = require('node-spotify-api');	
 
 	var spotify = new Spotify({
   		id: 'ac7ccdeac17a4079a92297a3144f7749',
@@ -37,69 +57,106 @@ function spotifyThisSong(song = 'The Sign'){
 	spotify.search({ 
 		type: 'track', 
 		query: song, 
-		limit: 1}, function(err, response) {
+		limit: 1}, 
+		function(err, response) {
+  			if (err) return console.log('Error occurred: ' + err);
 
-  		if (err) {
-    		return console.log('Error occurred: ' + err);
-  		}
-  	
-  		var data = response.tracks.items[0];
-  		var artists = data.artists[0].name;
+  			//get data from the responce
+  			var data = response.tracks.items[0];
+
+  			//if no data was found return and error message
+  			if(!data)
+  				return console.log('No information was found about this song.');
+
+  			//put the name of the first artist in artists string
+  			var artists = data.artists[0].name;
   		
-  		for(var i = 1; i < data.artists.length; i++){
-  			artists += ', ' + data.artists[i].name;
-  		}
-  		console.log('************************ spotify-this-song ************************');
-  		console.log('Artist(s): ' + artists);
-		console.log('Song\'s Name: ' + data.name); 
-		console.log('Preview Link: ' + data.preview_url);
-		console.log('Album Name: ' + data.album.name);
-		console.log('************************ end spotify-this-song ************************');
-	});
+  			//if there are more than 1 artist name, concatenate those names with artists string 
+  			for(var i = 1; i < data.artists.length; i++){
+  				artists += ', ' + data.artists[i].name;
+  			}
+
+  			//create a string with all info
+  			var songInfo = '************************ spotify-this-song ************************ \n';
+  			songInfo += 'Artist(s): ' + artists + '\n';
+  			songInfo += 'Song\'s Name: ' + data.name + '\n';
+  			songInfo += 'Preview Link: ' + data.preview_url + '\n';
+  			songInfo += 'Album Name: ' + data.album.name + '\n';
+  			songInfo += '************************ end spotify-this-song ************************ \n';
+
+  			//console log song's info
+  			console.log(songInfo);
+
+  			//Append song's info to log.txt file
+			fs.appendFile('log.txt', songInfo, function(err){
+				if (err) return console.log(err);
+			});
+		}
+	);
 }
 
-function movieThis(){
+//movie this function
+function movieThis(movieName){
+	//Load the request module
 	var request = require('request');
-	var movieName = "";
-	var arr = process.argv.slice(3);
 
-	movieName = arr.join('+');
-
-	if(movieName == ""){
-		movieName = 'Mr. Nobody';
-	}
-
+	//creat a url
 	var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&type=movie&apikey=40e9cece";
 	request(queryUrl, function(error, response, body){
-		var movieData = JSON.parse(body);
-
+		
+		//check for error
 		if(!error && response.statusCode === 200){
+			//parse the body into movieData variable
+			var movieData = JSON.parse(body);
+			
 			if(movieData.Error){
 				return console.log(movieData.Error);
 			}
-			console.log('************************ movie-this ************************');
-			console.log('Title: ' + movieData.Title);
-			console.log('Year: ' + movieData.Year);
-			console.log('IMDB Rating: ' + movieData.imdbRating);
-			console.log('Rotten Tomatoes Rating: ' + movieData.Ratings[1].Value);
-			console.log('Country: ' + movieData.Country);
-			console.log('Language: ' + movieData.Language);
-			console.log('Plot: ' + movieData.Plot);
-			console.log('Actors: ' + movieData.Actors);
-			console.log('************************ end movie-this ************************');
+
+			// Because not all movies have the Rotten Tomatoes Rating
+			var rottenTomatoes = "N/A";
+			for(var i = 0; i < movieData.Ratings.length; i++){
+				if(movieData.Ratings[i].Source == 'Rotten Tomatoes')
+					rottenTomatoes = movieData.Ratings[i].Value;
+			}
+
+			//create a string with all info
+			var movieInfo = '************************ movie-this ************************ \n';
+			movieInfo += 'Title: ' + movieData.Title + '\n';
+			movieInfo += 'Year: ' + movieData.Year + '\n';
+			movieInfo += 'IMDB Rating: ' + movieData.imdbRating + '\n';
+			movieInfo += 'Rotten Tomatoes Rating: ' + rottenTomatoes + '\n';
+			movieInfo += 'Country: ' + movieData.Country + '\n';
+			movieInfo += 'Language: ' + movieData.Language + '\n';
+			movieInfo += 'Plot: ' + movieData.Plot + '\n';
+			movieInfo += 'Actors: ' + movieData.Actors + '\n';
+			movieInfo += '************************ end movie-this ************************ \n';
+
+			//console log movie's info
+			console.log(movieInfo);
+			
+			//Append movie's info to log.txt file
+			fs.appendFile('log.txt', movieInfo, function(err){
+				if (err) return console.log(err);
+			});
 		}
 	});
 }
 
+//do what it says function
 function doWhatItSays(){
-	var fs = require('fs');
+	//read random.txt file
 	fs.readFile('random.txt', 'utf8', function(error, data){
 		if (error) {
     		return console.log(error);
   		}
+  		//create an array with the info in random.txt file
   		var dataArr = data.split(',');
+  		//The song's name is the 2nd element in the array
   		var song = dataArr[1];
+  		//Remove "" from the song's name
   		song = song.replace(/"/g, '');
+  		//Call spotify function
   		spotifyThisSong(song);
 	});
 }
