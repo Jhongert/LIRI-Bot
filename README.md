@@ -14,7 +14,7 @@ open Terminal/bash window
 - Navigate to liri-node-app folder. `cd liri-node-app`
 - Install all dependencies. `npm install`
 ### Application Structure
-- `git/` - Git folder
+- `.git/` - Git folder
 - `.gitignore` - To tell git not to track node_modules files, and thus they won't be committed to Github. 
 - `keys.js` - To store Twitter API keys.
 - `liri.js` - Entry point file.
