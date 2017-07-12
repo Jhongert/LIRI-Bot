@@ -1,7 +1,8 @@
-//Load fs Modules
+//Load required Modules
 var fs = require('fs');
 var inquirer = require("inquirer");
 
+//Ask the user to select what to do
 inquirer.prompt([
 	{
 		type: 'list',
@@ -10,26 +11,33 @@ inquirer.prompt([
 		choices: ['My tweets', 'Spotify a song', 'Movie this', 'Do what it says']
 	}
 	]).then(function(response){
+		//Take an action based on user selection
 		switch(response.choice){
 			case 'My tweets':
 				myTweets();
 				break;
 			case 'Spotify a song':
+				//Ask user to type the song's name.
 				inquirer.prompt([{
 					type: 'input',
-					message: 'Type your song.',
+					message: 'Type the song\'s name: ',
 					name: 'songName'
 				}]).then(function(response){
+					//assing the nome of the song to the variable songName 
+					//or "The sign" if not song was entered
 					var songName = response.songName.trim() || 'The sign';
 					spotifyThisSong(songName);
 				});
 				break;
 			case 'Movie this':
+				//Ask user to type the movie's name.
 				inquirer.prompt([{
 					type: 'input',
-					message: 'Type your movie.',
+					message: 'Type the movie\'s name: ',
 					name: 'movieName'
 				}]).then(function(response){
+					//assing the nome of the movie to the variable movieName 
+					//or "Mr. Nobody" if not movie was entered
 					var movieName = response.movieName.trim() || 'Mr. Nobody'
 					movieThis(movieName);
 				});
@@ -52,7 +60,7 @@ function myTweets(){
 	var params = {count: 20};
 
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
-  		if (!error) {
+  		if (!error && response.statusCode === 200) {
   			var tweetsInfo = '\n ************************ My tweets ************************ \n';
     		
     		for(var i = 0; i < tweets.length; i++){
@@ -86,39 +94,39 @@ function spotifyThisSong(song){
 		type: 'track', 
 		query: song, 
 		limit: 1}, 
-		function(err, response) {
-  			if (err) return console.log('Error occurred: ' + err);
+		function(error, response) {
+  			if (!error){
+	  			//get data from the responce
+	  			var data = response.tracks.items[0];
 
-  			//get data from the responce
-  			var data = response.tracks.items[0];
+	  			//if no data was found return and error message
+	  			if(!data)
+	  				return console.log('No information was found about this song.');
 
-  			//if no data was found return and error message
-  			if(!data)
-  				return console.log('No information was found about this song.');
+	  			//put the name of the first artist in artists string
+	  			var artists = data.artists[0].name;
+	  		
+	  			//if there are more than 1 artist name, concatenate those names with artists string 
+	  			for(var i = 1; i < data.artists.length; i++){
+	  				artists += ', ' + data.artists[i].name;
+	  			}
 
-  			//put the name of the first artist in artists string
-  			var artists = data.artists[0].name;
-  		
-  			//if there are more than 1 artist name, concatenate those names with artists string 
-  			for(var i = 1; i < data.artists.length; i++){
-  				artists += ', ' + data.artists[i].name;
-  			}
+	  			//create a string with all info
+	  			var songInfo = '\n ************************ spotify-this-song ************************ \n';
+	  			songInfo += 'Artist(s): ' + artists + '\n';
+	  			songInfo += 'Song\'s Name: ' + data.name + '\n';
+	  			songInfo += 'Preview Link: ' + data.preview_url + '\n';
+	  			songInfo += 'Album Name: ' + data.album.name + '\n';
+	  			songInfo += '************************ end spotify-this-song ************************ \n';
 
-  			//create a string with all info
-  			var songInfo = '\n ************************ spotify-this-song ************************ \n';
-  			songInfo += 'Artist(s): ' + artists + '\n';
-  			songInfo += 'Song\'s Name: ' + data.name + '\n';
-  			songInfo += 'Preview Link: ' + data.preview_url + '\n';
-  			songInfo += 'Album Name: ' + data.album.name + '\n';
-  			songInfo += '************************ end spotify-this-song ************************ \n';
+	  			//console log song's info
+	  			console.log(songInfo);
 
-  			//console log song's info
-  			console.log(songInfo);
-
-  			//Append song's info to log.txt file
-			fs.appendFile('log.txt', songInfo, function(err){
-				if (err) return console.log(err);
-			});
+	  			//Append song's info to log.txt file
+				fs.appendFile('log.txt', songInfo, function(err){
+					if (err) return console.log(err);
+				});
+			} else console.log('Error occurred: ' + error);
 		}
 	);
 }
@@ -166,7 +174,7 @@ function movieThis(movieName){
 			fs.appendFile('log.txt', movieInfo, function(err){
 				if (err) return console.log(err);
 			});
-		}
+		} else console.log('Error occurred: ' + error);
 	});
 }
 
@@ -174,15 +182,15 @@ function movieThis(movieName){
 function doWhatItSays(){
 	//read random.txt file
 	fs.readFile('random.txt', 'utf8', function(error, data){
-		if (error) return console.log(error);
-
-  		//create an array with the info in random.txt file
-  		var dataArr = data.split(',');
-  		//The song's name is the 2nd element in the array
-  		var song = dataArr[1];
-  		//Remove "" from the song's name
-  		song = song.replace(/"/g, '');
-  		//Call spotify function
-  		spotifyThisSong(song);
+		if (!error){
+	  		//create an array with the info in random.txt file
+	  		var dataArr = data.split(',');
+	  		//The song's name is the 2nd element in the array
+	  		var song = dataArr[1];
+	  		//Remove "" from the song's name
+	  		song = song.replace(/"/g, '');
+	  		//Call spotify function
+	  		spotifyThisSong(song);
+	  	} else return console.log(error);
 	});
 }
