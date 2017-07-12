@@ -1,43 +1,47 @@
 //Load fs Modules
 var fs = require('fs');
+var inquirer = require("inquirer");
 
-// Get the command(my-tweets, movie-this, etc) from process.argv
-// The command will be the 3rd argumet
-var command = process.argv[2];
-var parameter;
-
-//if there are more than 3 arguments in process.argv
-//then those arguments are the movie's name or song's name
-if(process.argv.length > 3){
-	//get all arguments from process.argv starting on position 3 in a new array
-	var arr = process.argv.slice(3);
-
-	//create a string separated by plus(+) sign with the arguments in arr array
-	//this strin is the movie's name or song's name
-	parameter = arr.join('+');
-}
-
-//check the command typed and call the corresponding function
-switch(command){
-	case 'my-tweets':
-		myTweets();
-		break;
-	case 'spotify-this-song':
-		if(parameter)
-			spotifyThisSong(parameter);
-		else 
-			spotifyThisSong('The Sign');
-		break;
-	case 'movie-this':
-		if(parameter)
-			movieThis(parameter)
-		else 
-			movieThis('Mr. Nobody');
-		break;
-	case 'do-what-it-says':
-		doWhatItSays();
-		break;
-}
+inquirer.prompt([
+	{
+		type: 'list',
+		name: 'choice',
+		message: 'What do you want to do?',
+		choices: ['My tweets', 'Spotify a song', 'Movie this', 'Do what it says']
+	}
+	]).then(function(response){
+		switch(response.choice){
+			case 'My tweets':
+				myTweets();
+				break;
+			case 'Spotify a song':
+				inquirer.prompt([{
+					type: 'input',
+					message: 'Type your song.',
+					name: 'songName'
+				}]).then(function(response){
+					if(response.songName){
+						spotifyThisSong(response.songName);
+					} else spotifyThisSong('The sign');
+				});
+				break;
+			case 'Movie this':
+				inquirer.prompt([{
+					type: 'input',
+					message: 'Type your movie.',
+					name: 'movieName'
+				}]).then(function(response){
+					if(response.movieName){
+						movieThis(response.movieName);
+					} else movieThis('Mr. Nobody');
+				});
+				break;
+			case 'Do what it says':
+				doWhatItSays();
+				break;
+		}
+	}
+);
 
 //my tweets function
 function myTweets(){
@@ -51,7 +55,7 @@ function myTweets(){
 
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
   		if (!error) {
-  			var tweetsInfo = '************************ My tweets ************************ \n';
+  			var tweetsInfo = '\n ************************ My tweets ************************ \n';
     		
     		for(var i = 0; i < tweets.length; i++){
     			tweetsInfo += 'Created on: ' + tweets[i].created_at + '\n';
@@ -104,7 +108,7 @@ function spotifyThisSong(song){
   			}
 
   			//create a string with all info
-  			var songInfo = '************************ spotify-this-song ************************ \n';
+  			var songInfo = '\n ************************ spotify-this-song ************************ \n';
   			songInfo += 'Artist(s): ' + artists + '\n';
   			songInfo += 'Song\'s Name: ' + data.name + '\n';
   			songInfo += 'Preview Link: ' + data.preview_url + '\n';
@@ -148,7 +152,7 @@ function movieThis(movieName){
 			}
 
 			//create a string with all info
-			var movieInfo = '************************ movie-this ************************ \n';
+			var movieInfo = '\n ************************ movie-this ************************ \n';
 			movieInfo += 'Title: ' + movieData.Title + '\n';
 			movieInfo += 'Year: ' + movieData.Year + '\n';
 			movieInfo += 'IMDB Rating: ' + movieData.imdbRating + '\n';

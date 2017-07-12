@@ -4,9 +4,10 @@
   "description": "A node.js app",
   "main": "liri.js",
   "dependencies": {
+    "inquirer": "^3.2.0",
     "node-spotify-api": "^1.0.5",
-    "twitter": "^1.7.1",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "twitter": "^1.7.1"
   },
   "devDependencies": {},
   "scripts": {
