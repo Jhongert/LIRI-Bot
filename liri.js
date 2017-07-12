@@ -20,9 +20,8 @@ inquirer.prompt([
 					message: 'Type your song.',
 					name: 'songName'
 				}]).then(function(response){
-					if(response.songName){
-						spotifyThisSong(response.songName);
-					} else spotifyThisSong('The sign');
+					var songName = response.songName.trim() || 'The sign';
+					spotifyThisSong(songName);
 				});
 				break;
 			case 'Movie this':
@@ -31,9 +30,8 @@ inquirer.prompt([
 					message: 'Type your movie.',
 					name: 'movieName'
 				}]).then(function(response){
-					if(response.movieName){
-						movieThis(response.movieName);
-					} else movieThis('Mr. Nobody');
+					var movieName = response.movieName.trim() || 'Mr. Nobody'
+					movieThis(movieName);
 				});
 				break;
 			case 'Do what it says':
@@ -70,8 +68,7 @@ function myTweets(){
 			fs.appendFile('log.txt', tweetsInfo, function(err){
 				if (err) return console.log(err);
 			});
-
-  		} else {console.log(error)}
+  		} else console.log(error)
 	});
 }
 
@@ -140,9 +137,8 @@ function movieThis(movieName){
 			//parse the body into movieData variable
 			var movieData = JSON.parse(body);
 
-			if(movieData.Error){
+			if(movieData.Error)
 				return console.log(movieData.Error);
-			}
 
 			// Because not all movies have the Rotten Tomatoes Rating
 			var rottenTomatoes = "N/A";
@@ -178,9 +174,8 @@ function movieThis(movieName){
 function doWhatItSays(){
 	//read random.txt file
 	fs.readFile('random.txt', 'utf8', function(error, data){
-		if (error) {
-    		return console.log(error);
-  		}
+		if (error) return console.log(error);
+
   		//create an array with the info in random.txt file
   		var dataArr = data.split(',');
   		//The song's name is the 2nd element in the array

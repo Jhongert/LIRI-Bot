@@ -94,3 +94,50 @@ Song's Name: I Want It That Way
 Preview Link: https://p.scdn.co/mp3-preview/e72a05dc3f69c891e3390c3ceaa77fad02f6b5f6?cid=ac7ccdeac17a4079a92297a3144f7749
 Album Name: The Hits--Chapter One
 ************************ end spotify-this-song ************************ 
+
+ ************************ My tweets ************************ 
+Created on: Tue Jul 11 18:37:25 +0000 2017
+Content: Node js is awesome
+---------------------------------------------------------------- 
+Created on: Tue Jul 11 18:20:12 +0000 2017
+Content: This is my first tweet
+---------------------------------------------------------------- 
+************************ end my tweets ************************ 
+
+ ************************ spotify-this-song ************************ 
+Artist(s): Backstreet Boys
+Song's Name: I Want It That Way
+Preview Link: https://p.scdn.co/mp3-preview/e72a05dc3f69c891e3390c3ceaa77fad02f6b5f6?cid=ac7ccdeac17a4079a92297a3144f7749
+Album Name: The Hits--Chapter One
+************************ end spotify-this-song ************************ 
+
+ ************************ My tweets ************************ 
+Created on: Tue Jul 11 18:37:25 +0000 2017
+Content: Node js is awesome
+---------------------------------------------------------------- 
+Created on: Tue Jul 11 18:20:12 +0000 2017
+Content: This is my first tweet
+---------------------------------------------------------------- 
+************************ end my tweets ************************ 
+
+ ************************ movie-this ************************ 
+Title: Mr. Nobody
+Year: 2009
+IMDB Rating: 7.9
+Rotten Tomatoes Rating: 64%
+Country: Belgium, Germany, Canada, France, USA, UK
+Language: English, Mohawk
+Plot: A boy stands on a station platform as a train is about to leave. Should he go with his mother or stay with his father? Infinite possibilities arise from this decision. As long as he doesn't choose, anything is possible.
+Actors: Jared Leto, Sarah Polley, Diane Kruger, Linh Dan Pham
+************************ end movie-this ************************ 
+
+ ************************ movie-this ************************ 
+Title: Mr. Nobody
+Year: 2009
+IMDB Rating: 7.9
+Rotten Tomatoes Rating: 64%
+Country: Belgium, Germany, Canada, France, USA, UK
+Language: English, Mohawk
+Plot: A boy stands on a station platform as a train is about to leave. Should he go with his mother or stay with his father? Infinite possibilities arise from this decision. As long as he doesn't choose, anything is possible.
+Actors: Jared Leto, Sarah Polley, Diane Kruger, Linh Dan Pham
+************************ end movie-this ************************ 
