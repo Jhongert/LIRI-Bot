@@ -56,14 +56,14 @@ function myTweets(){
     		for(var i = 0; i < tweets.length; i++){
     			tweetsInfo += 'Created on: ' + tweets[i].created_at + '\n';
     			tweetsInfo += 'Content: ' + tweets[i].text + '\n';
+    			tweetsInfo += '---------------------------------------------------------------- \n';
     		}
     		tweetsInfo += '************************ end my tweets ************************ \n';
-    		
     		//console log tweets
     		console.log(tweetsInfo);
-
+    		
     		//Append tweets to log.txt file
-			fs.appendFile('log.txt', songInfo, function(err){
+			fs.appendFile('log.txt', tweetsInfo, function(err){
 				if (err) return console.log(err);
 			});
 
