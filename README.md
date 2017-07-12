@@ -9,4 +9,5 @@ These instructions will get you a copy of the project up and running on your loc
 - **request:** For equest and grab data from the OMDB API.
 - **twitter:** Used to access my twitter feed and return the last 20 tweets.
 ### Installing
-- Clone this repo
+- Clone this repo. `git clone https://github.com/Jhongert/LIRI-Bot.git`
+- `nmp install` to install all dependencies
