@@ -7,16 +7,16 @@ inquirer.prompt([
 	{
 		type: 'list',
 		name: 'choice',
-		message: 'What do you want to do?',
-		choices: ['My tweets', 'Spotify a song', 'Movie this', 'Do what it says']
+		message: 'Choose a command:',
+		choices: ['my-tweets', 'spotify-this-song', 'movie-this', 'do-what-it-says']
 	}
 	]).then(function(response){
 		//Take an action based on user selection
 		switch(response.choice){
-			case 'My tweets':
+			case 'my-tweets':
 				myTweets();
 				break;
-			case 'Spotify a song':
+			case 'spotify-this-song':
 				//Ask user to type the song's name.
 				inquirer.prompt([{
 					type: 'input',
@@ -29,7 +29,7 @@ inquirer.prompt([
 					spotifyThisSong(songName);
 				});
 				break;
-			case 'Movie this':
+			case 'movie-this':
 				//Ask user to type the movie's name.
 				inquirer.prompt([{
 					type: 'input',
@@ -42,7 +42,7 @@ inquirer.prompt([
 					movieThis(movieName);
 				});
 				break;
-			case 'Do what it says':
+			case 'do-what-it-says':
 				doWhatItSays();
 				break;
 		}
@@ -185,12 +185,20 @@ function doWhatItSays(){
 		if (!error){
 	  		//create an array with the info in random.txt file
 	  		var dataArr = data.split(',');
-	  		//The song's name is the 2nd element in the array
-	  		var song = dataArr[1];
-	  		//Remove "" from the song's name
-	  		song = song.replace(/"/g, '');
-	  		//Call spotify function
-	  		spotifyThisSong(song);
+	  		//The command is the first element and the argument is the 2nd element in the array
+	  		var command = dataArr[0];
+	  		var argument = dataArr[1];
+	  		//Remove "" from the argument
+	  		argument = argument.replace(/"/g, '');
+	  		//Call the function base on the command
+	  		switch(command){
+	  			case 'spotify-this-song':
+	  				spotifyThisSong(argument);
+	  				break;
+	  			case 'movie-this':
+	  				movieThis(argument);
+	  				break;
+	  		}	
 	  	} else return console.log(error);
 	});
 }

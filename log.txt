@@ -148,3 +148,48 @@ Song's Name: I Want It That Way
 Preview Link: https://p.scdn.co/mp3-preview/e72a05dc3f69c891e3390c3ceaa77fad02f6b5f6?cid=ac7ccdeac17a4079a92297a3144f7749
 Album Name: The Hits--Chapter One
 ************************ end spotify-this-song ************************ 
+
+ ************************ My tweets ************************ 
+Created on: Tue Jul 11 18:37:25 +0000 2017
+Content: Node js is awesome
+---------------------------------------------------------------- 
+Created on: Tue Jul 11 18:20:12 +0000 2017
+Content: This is my first tweet
+---------------------------------------------------------------- 
+************************ end my tweets ************************ 
+
+ ************************ spotify-this-song ************************ 
+Artist(s): Julia Michaels
+Song's Name: Issues
+Preview Link: null
+Album Name: Issues
+************************ end spotify-this-song ************************ 
+
+ ************************ movie-this ************************ 
+Title: Step Brothers
+Year: 2008
+IMDB Rating: 6.9
+Rotten Tomatoes Rating: 55%
+Country: USA
+Language: English, Spanish
+Plot: Two aimless middle-aged losers still living at home are forced against their will to become roommates when their parents marry.
+Actors: Will Ferrell, John C. Reilly, Mary Steenburgen, Richard Jenkins
+************************ end movie-this ************************ 
+
+ ************************ spotify-this-song ************************ 
+Artist(s): Backstreet Boys
+Song's Name: I Want It That Way
+Preview Link: https://p.scdn.co/mp3-preview/e72a05dc3f69c891e3390c3ceaa77fad02f6b5f6?cid=ac7ccdeac17a4079a92297a3144f7749
+Album Name: The Hits--Chapter One
+************************ end spotify-this-song ************************ 
+
+ ************************ movie-this ************************ 
+Title: Wonder Woman
+Year: 2017
+IMDB Rating: 8.0
+Rotten Tomatoes Rating: 92%
+Country: USA, China, Hong Kong, UK, Italy, Canada, New Zealand
+Language: English, German, Dutch
+Plot: Before she was Wonder Woman, she was Diana, princess of the Amazons, trained warrior. When a pilot crashes and tells of conflict in the outside world, she leaves home to fight a war, discovering her full powers and true destiny.
+Actors: Gal Gadot, Chris Pine, Connie Nielsen, Robin Wright
+************************ end movie-this ************************ 
