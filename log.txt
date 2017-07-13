@@ -193,3 +193,19 @@ Language: English, German, Dutch
 Plot: Before she was Wonder Woman, she was Diana, princess of the Amazons, trained warrior. When a pilot crashes and tells of conflict in the outside world, she leaves home to fight a war, discovering her full powers and true destiny.
 Actors: Gal Gadot, Chris Pine, Connie Nielsen, Robin Wright
 ************************ end movie-this ************************ 
+
+ ************************ My tweets ************************ 
+Created on: Tue Jul 11 18:37:25 +0000 2017
+Content: Node js is awesome
+---------------------------------------------------------------- 
+Created on: Tue Jul 11 18:20:12 +0000 2017
+Content: This is my first tweet
+---------------------------------------------------------------- 
+************************ end my tweets ************************ 
+
+ ************************ spotify-this-song ************************ 
+Artist(s): Harry Styles
+Song's Name: Sign of the Times
+Preview Link: https://p.scdn.co/mp3-preview/9801b9239ad1b833f1317574ee55b9d7b8426ff1?cid=ac7ccdeac17a4079a92297a3144f7749
+Album Name: Sign of the Times
+************************ end spotify-this-song ************************ 

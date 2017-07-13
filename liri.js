@@ -23,10 +23,8 @@ inquirer.prompt([
 					message: 'Type the song\'s name: ',
 					name: 'songName'
 				}]).then(function(response){
-					//assing the nome of the song to the variable songName 
-					//or "The sign" if not song was entered
-					var songName = response.songName.trim() || 'The sign';
-					spotifyThisSong(songName);
+					//call spotify function
+					spotifyThisSong(response.songName.trim());
 				});
 				break;
 			case 'movie-this':
@@ -36,10 +34,8 @@ inquirer.prompt([
 					message: 'Type the movie\'s name: ',
 					name: 'movieName'
 				}]).then(function(response){
-					//assing the nome of the movie to the variable movieName 
-					//or "Mr. Nobody" if not movie was entered
-					var movieName = response.movieName.trim() || 'Mr. Nobody'
-					movieThis(movieName);
+					//call movieThis function
+					movieThis(response.movieName.trim());
 				});
 				break;
 			case 'do-what-it-says':
@@ -90,6 +86,8 @@ function spotifyThisSong(song){
   		secret: '36cb3539b0ca4e3a9d74ef9ab6acdc7f'
 	});
  
+ 	if(!song) song = 'The sign';
+
 	spotify.search({ 
 		type: 'track', 
 		query: song, 
@@ -136,7 +134,9 @@ function movieThis(movieName){
 	//Load the request module
 	var request = require('request');
 
-	//creat a url
+	if(!movieName) movieName = 'Mr. Nobody';
+
+	//create a url
 	var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&type=movie&apikey=40e9cece";
 	request(queryUrl, function(error, response, body){
 		
@@ -188,10 +188,15 @@ function doWhatItSays(){
 	  		//The command is the first element and the argument is the 2nd element in the array
 	  		var command = dataArr[0];
 	  		var argument = dataArr[1];
+
 	  		//Remove "" from the argument
-	  		argument = argument.replace(/"/g, '');
+	  		if(argument) argument = argument.replace(/"/g, '');
+
 	  		//Call the function base on the command
 	  		switch(command){
+	  			case 'my-tweets':
+					myTweets();
+					break;
 	  			case 'spotify-this-song':
 	  				spotifyThisSong(argument);
 	  				break;
