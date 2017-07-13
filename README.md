@@ -9,7 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 - **request:** For request and grab data from the OMDB API.
 - **twitter:** Used to access my twitter feed and return the last 20 tweets.
 ### Installing
-open Terminal/bash window
+Open Terminal/bash window
 - Clone this repo. `git clone https://github.com/Jhongert/liri-node-app.git`
 - Navigate to liri-node-app folder. `cd liri-node-app`
 - Install all dependencies. `npm install`
