@@ -86,7 +86,7 @@ function spotifyThisSong(song){
   		secret: '36cb3539b0ca4e3a9d74ef9ab6acdc7f'
 	});
  
- 	if(!song) song = 'The sign';
+ 	if(!song) song = 'The sign Ace of Base';
 
 	spotify.search({ 
 		type: 'track', 
